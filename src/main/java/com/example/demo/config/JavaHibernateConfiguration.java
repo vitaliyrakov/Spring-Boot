@@ -27,8 +27,7 @@ public class JavaHibernateConfiguration {
         JdbcDataSource dataSource = new JdbcDataSource();
         dataSource.setUser("sa");
         dataSource.setPassword("");
-        dataSource.setURL("jdbc:h2:./spring-orm");
-
+        dataSource.setURL("jdbc:h2:./test");
         return dataSource;
     }
 
@@ -46,7 +45,6 @@ public class JavaHibernateConfiguration {
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "none");
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         hibernateProperties.setProperty("hibernate.show_sql", "true");
-
         return hibernateProperties;
     }
 }

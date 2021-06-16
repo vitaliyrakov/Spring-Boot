@@ -3,12 +3,12 @@ package com.example.demo.model.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Product")
+@Table(name="products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Long id;
+    private int id;
 
     @Column(name = "title")
     private String title;
@@ -17,7 +17,7 @@ public class Product {
     private int price;
 
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -29,7 +29,7 @@ public class Product {
         return price;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

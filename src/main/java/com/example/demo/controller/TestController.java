@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.entity.Product;
 import com.example.demo.model.repository.ProductRepository;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +24,14 @@ public class TestController {
         productRepository.save(product);
     }
 
-    @GetMapping("/find")
+    @GetMapping("/findAll")
     public List<Product> findAll() {
-        Product product = new Product();
         return productRepository.findAll();
+    }
+
+    @GetMapping("/find")
+    public Product find(@RequestParam int id) {
+        return productRepository.findById(id);
     }
 
 }

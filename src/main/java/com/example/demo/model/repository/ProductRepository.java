@@ -15,7 +15,7 @@ public class ProductRepository {
         this.entityManager = entityManager;
     }
 
-    public Product findById(Long id) {
+    public Product findById(int id) {
         return entityManager.find(Product.class, id);
     }
 
@@ -23,7 +23,7 @@ public class ProductRepository {
         return entityManager.createNativeQuery("SELECT * FROM products", Product.class).getResultList();
     }
 
-    public boolean deleteById(Long id) {
+    public boolean deleteById(int id) {
         final EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         int result = entityManager.createNativeQuery("DELETE FROM products WHERE id = " + id).executeUpdate();

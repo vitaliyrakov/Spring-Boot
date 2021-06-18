@@ -16,14 +16,6 @@ public class TestController {
         this.productRepository = productRepository;
     }
 
-    @GetMapping("/new")
-    public void addProduct(@RequestParam String title, @RequestParam int price) {
-        Product product = new Product();
-        product.setTitle(title);
-        product.setPrice(price);
-        productRepository.save(product);
-    }
-
     @GetMapping("/findAll")
     public List<Product> findAll() {
         return productRepository.findAll();

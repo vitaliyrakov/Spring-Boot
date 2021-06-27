@@ -2,13 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.entity.Product;
 import com.example.demo.service.ProductService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/products")
 public class ProductController {
 
@@ -19,32 +19,24 @@ public class ProductController {
     }
 
     @GetMapping()
-    public String showProducts(Model model) {
-        model.addAttribute("products", productService.findAll());
-        return "products/showAll";
+    public List<Product> showProducts() {
+        return productService.findAll();
     }
 
     @GetMapping("/{id}")
-    public String showProduct(@PathVariable("id") int id, Model model) {
-        model.addAttribute("product", productService.findById(id));
-        return "products/show";
-    }
-
-    @GetMapping("/new")
-    public String addProduct(@ModelAttribute("product") Product product) {
-        return "products/new";
+    public Product showProduct(@PathVariable("id") int id) {
+        return productService.findById(id);
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("product") Product product) {
+    public Product create(@ModelAttribute("product") Product product) {
         product.getPrice().setDate(new Date());
-        productService.save(product);
-        return "redirect:/products";
+        return productService.save(product);
     }
 
     @PostMapping("/{id}")
-    public String deleteProduct(@PathVariable("id") int id) {
+    public int deleteProduct(@PathVariable("id") int id) {
         productService.delete(id);
-        return "redirect:/products";
+        return HttpStatus.OK.value();
     }
 }

@@ -1,13 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.entity.Customer;
 import com.example.demo.service.CustomerService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/customers")
 public class CustomerController {
 
@@ -18,15 +20,13 @@ public class CustomerController {
     }
 
     @GetMapping()
-    public String showCustomers(Model model) {
-        model.addAttribute("customers", customerService.findAll());
-        return "customers/showAll";
+    public List<Customer> showCustomers() {
+        return customerService.findAll();
     }
 
     @GetMapping("/{id}")
-    public String showCustomer(@PathVariable("id") int id, Model model) {
-        model.addAttribute("customer", customerService.findById(id));
-        return "customers/show";
+    public Customer showCustomer(@PathVariable("id") int id) {
+        return customerService.findById(id);
     }
 
 }

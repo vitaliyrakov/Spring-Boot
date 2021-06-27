@@ -4,6 +4,7 @@ import com.example.demo.model.entity.Product;
 import com.example.demo.model.repository.ProductRepository;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,13 +23,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Product findById(int id) {
         return productRepository.findById(id).stream().peek(it -> Hibernate.initialize(it.getCustomers())).findFirst().orElse(null);
     }
 
     @Override
-    public void save(Product product) {
+    public Product save(Product product) {
         productRepository.save(product);
+        return product;
     }
 
     @Override

@@ -1,13 +1,8 @@
 
-insert into PRICE (cost, dateP)
-VALUES  (50, '2021-07-01'),
-        (60, '2021-07-01'),
-        (70, '2021-07-01');
-
-insert into PRODUCTS (title, price_id)
-VALUES  ('Гречка', 1),
-        ('Хлеб', 2),
-        ('Рис', 3);
+insert into PRODUCTS (title, price)
+VALUES  ('Гречка', 10),
+        ('Хлеб', 20),
+        ('Рис', 30);
 
 insert into CUSTOMERS (name)
 VALUES  ('Иван'),

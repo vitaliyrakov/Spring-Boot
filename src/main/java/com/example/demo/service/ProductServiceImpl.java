@@ -1,37 +1,36 @@
 package com.example.demo.service;
 
-import com.example.demo.model.entity.Product;
+import com.example.demo.controller.dto.ProductDto;
+import com.example.demo.controller.mapper.ProductMapper;
 import com.example.demo.model.repository.ProductRepository;
-import org.hibernate.Hibernate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<ProductDto> findAll() {
+        return productRepository.findAll().stream().map(ProductMapper.MAPPER::fromProduct).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Product findById(int id) {
-        return productRepository.findById(id).stream().peek(it -> Hibernate.initialize(it.getCustomers())).findFirst().orElse(null);
+    public ProductDto findById(int id) {
+        return productRepository.findById(id).stream().map(ProductMapper.MAPPER::fromProduct).findFirst().orElse(null);
     }
 
     @Override
-    public Product save(Product product) {
-        productRepository.save(product);
-        return product;
+    public ProductDto save(ProductDto productDto) {
+        productRepository.save(ProductMapper.toProduct(productDto));
+        return productDto;
     }
 
     @Override

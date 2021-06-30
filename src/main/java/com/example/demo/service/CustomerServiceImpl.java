@@ -1,30 +1,27 @@
 package com.example.demo.service;
 
-import com.example.demo.model.entity.Customer;
+import com.example.demo.controller.dto.CustomerDto;
+import com.example.demo.controller.mapper.CustomerMapper;
 import com.example.demo.model.repository.CustomerRepository;
-import org.hibernate.Hibernate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    @Override
+    public List<CustomerDto> findAll() {
+        return customerRepository.findAll().stream().map(CustomerMapper.MAPPER::fromCustomer).collect(Collectors.toList());
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
-    }
-
-    @Override
-    public Customer findById(int id) {
-        return customerRepository.findById(id).stream().peek(it -> Hibernate.initialize(it.getProducts())).findFirst().orElse(null);
+    public CustomerDto findById(int id) {
+        return customerRepository.findById(id).stream().map(CustomerMapper.MAPPER::fromCustomer).findFirst().orElse(null);
     }
 }

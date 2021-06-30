@@ -1,10 +1,3 @@
-create table if not exists price
-(
-    id   int primary key auto_increment,
-    cost int not null,
-    dateP date not null
-);
-
 create table if not exists customers
 (
     id   int primary key auto_increment,
@@ -15,8 +8,7 @@ create table if not exists products
 (
     id   int primary key auto_increment,
     title varchar2 not null unique,
-    price_id int not null,
-    foreign key (price_id) references price (id)
+    price double not null
 );
 
 create table if not exists orders

@@ -1,13 +1,13 @@
 package com.example.demo.service;
 
-import com.example.demo.model.entity.Customer;
+import com.example.demo.controller.dto.CustomerDto;
 
 import java.util.List;
 
 public interface CustomerService {
 
-    List<Customer> findAll();
+    List<CustomerDto> findAll();
 
-    Customer findById(int id);
+    CustomerDto findById(int id);
 
 }

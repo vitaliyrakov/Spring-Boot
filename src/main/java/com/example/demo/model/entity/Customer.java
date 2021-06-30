@@ -1,11 +1,15 @@
 package com.example.demo.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "customers")
+@Getter
+@Setter
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,30 +29,6 @@ public class Customer {
                 .map(p -> p.getTitle())
                 .sorted()
                 .collect(Collectors.joining(", "));
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 }
 

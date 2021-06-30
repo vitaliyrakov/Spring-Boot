@@ -1,16 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.model.entity.Product;
+import com.example.demo.controller.dto.ProductDto;
 
 import java.util.List;
 
 public interface ProductService {
 
-    List<Product> findAll();
+    List<ProductDto> findAll();
 
-    Product findById(int id);
+    ProductDto findById(int id);
 
-    Product save(Product product);
+    ProductDto save(ProductDto productDto);
 
     void delete(int id);
 }

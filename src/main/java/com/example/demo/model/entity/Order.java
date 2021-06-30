@@ -1,11 +1,15 @@
 package com.example.demo.model.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,36 +31,5 @@ public class Order {
     )
     private List<Product> products;
 
-    public int getId() {
-        return id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 }
 

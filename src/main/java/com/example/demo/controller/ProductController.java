@@ -3,11 +3,13 @@ package com.example.demo.controller;
 import com.example.demo.controller.dto.ProductDto;
 import com.example.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.annotation.security.RolesAllowed;
 
-@RestController
+@Controller
 @RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
@@ -15,22 +17,28 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping()
-    public List<ProductDto> showProducts() {
-        return productService.findAll();
+    public String showProducts(Model model) {
+        model.addAttribute("products", productService.findAll());
+        return "products/showAll";
     }
 
     @GetMapping("/{id}")
-    public  ProductDto showProduct(@PathVariable("id") int id) {
-        return productService.findById(id);
+    public String showProduct(@PathVariable("id") int id, Model model) {
+        model.addAttribute("product", productService.findById(id));
+        return "products/show";
     }
 
     @PostMapping()
-    public void create(@ModelAttribute("product") ProductDto productDto) {
+    @RolesAllowed({"ADMIN", "MANAGER"})
+    public String create(@ModelAttribute("product") ProductDto productDto) {
         productService.save(productDto);
+        return "products/showAll";
     }
 
     @PostMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") int id) {
+    @RolesAllowed({"ADMIN", "MANAGER"})
+    public String deleteProduct(@PathVariable("id") int id) {
         productService.delete(id);
+        return "products/showAll";
     }
 }

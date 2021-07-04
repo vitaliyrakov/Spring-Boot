@@ -1,16 +1,16 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.dto.CustomerDto;
 import com.example.demo.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.annotation.security.RolesAllowed;
 
-@RestController
+@Controller
 @RequestMapping("/customers")
 @RequiredArgsConstructor
 public class CustomerController {
@@ -18,13 +18,17 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping()
-    public List<CustomerDto> showCustomers() {
-        return customerService.findAll();
+    @RolesAllowed({"ADMIN"})
+    public String showCustomers(Model model) {
+        model.addAttribute("customers", customerService.findAll());
+        return "customers/showAll";
     }
 
     @GetMapping("/{id}")
-    public CustomerDto showCustomer(@PathVariable("id") int id) {
-        return customerService.findById(id);
+    @RolesAllowed({"ADMIN"})
+    public String showCustomer(@PathVariable("id") int id, Model model) {
+        model.addAttribute("customer", customerService.findById(id));
+        return "customers/show";
     }
 
 }
